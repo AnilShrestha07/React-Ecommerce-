@@ -19,7 +19,11 @@ axiosInstance.interceptors.response.use((response: AxiosResponse)=>{
     return response.data
 },
 (exception : AxiosError)=>{
-    
+    let errorResponse = {
+        status: exception.status,
+        error: exception?.response?.data
+    }
+    throw errorResponse
 }
 )
 
