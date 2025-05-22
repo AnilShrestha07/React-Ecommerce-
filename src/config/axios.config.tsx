@@ -12,6 +12,9 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use((config)=>{
+    if(localStorage.getItem("_at_")){
+        config.headers.Authorization = "Bearer " + localStorage.getItem("_at_")
+    }
     return config
 })
 

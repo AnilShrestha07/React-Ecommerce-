@@ -6,12 +6,15 @@ import {
   PasswordInput,
   TextInput,
 } from "../../../components/form/input.component";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import authSvc from "../../../services/auth.service";
+import { toast } from 'react-toastify';
+import { useAuth } from "../../../context/auth.context";
+
 
 
 
@@ -20,19 +23,19 @@ function WelcomeMessage() {
     "We're so glad  you're here. Explore our collection of [mention top categories or products briefly], enjoy exclusive deals, and experience seamless shopping. Need help? Our team is just a click away!"
   );
 
-  useEffect(() => {
-    console.log("i am always execute on any state changes");
-  });
+  // useEffect(() => {
+  //   console.log("i am always execute on any state changes");
+  // });
 
-  useEffect(() => {
-    console.log("i will execute only once when the component first render");
-  }, []);
+  // useEffect(() => {
+  //   console.log("i will execute only once when the component first render");
+  // }, []);
 
-  useEffect(() => {
-    console.log(
-      "i will only execute, when there is any change on pageContent "
-    );
-  }, [pageContent]);
+  // useEffect(() => {
+  //   console.log(
+  //     "i will only execute, when there is any change on pageContent "
+  //   );
+  // }, [pageContent]);
 
   return (
     <>
@@ -55,7 +58,10 @@ const LoginDTO = Yup.object({
 })
 
 function Login() {
-  // const navigate = useNavigate();
+
+  const {loggedInUser, setLoggedInUser} = useAuth()
+  // console.log(loggedInUser)
+  const navigate = useNavigate();
 
  const {control, handleSubmit, formState: {errors}, reset} = useForm({
   defaultValues:{
@@ -67,8 +73,13 @@ function Login() {
 
  const submitForm = async (data:ICredentials )=>{
   try{
+
       const response = await authSvc.login(data)
-      console.log(response)
+
+      toast.success(`welcome to /${response.role} panel!!!`)
+      setLoggedInUser(response)
+      navigate(`/${response.role}`)
+      // console.log(response)
   } catch(exception){
     console.error(exception)
   }
@@ -76,6 +87,13 @@ function Login() {
   // navigate("/home")
   
  }
+
+ useEffect(()=>{
+  const token = localStorage.getItem("_at_")
+  if(token && loggedInUser){
+    navigate("/" + loggedInUser.role)
+  } 
+ })
 //  console.log(errors)
 
   return (
