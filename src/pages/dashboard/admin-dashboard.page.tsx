@@ -1,102 +1,23 @@
-import { useEffect, useState } from "react";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
-import { Button, Layout, Menu, Spin, theme } from "antd";
-import { Outlet, useNavigate } from "react-router";
-import { useAuth } from "../../context/auth.context";
-import { toast } from "react-toastify";
 
-const { Header, Sider, Content } = Layout;
-const AdminDashboard = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [collapsed, setCollapsed] = useState(false);
-  const navigate = useNavigate()
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+import DashboardCard from "../../components/dashboard/dashboard.card"
+import {FaCartShopping, FaDollarSign, FaSitemap, FaUserGroup} from "react-icons/fa6"
 
-  const {loggedInUser} = useAuth()
 
-  useEffect(()=>{
-    if(!loggedInUser){
-      toast.warning("Please login to continue!!!")
-      navigate('/')
-    }else if(loggedInUser && loggedInUser.role !== 'admin'){
-      toast.warning("you do not have admin role to access this panel!!!")
-      navigate('/'+ loggedInUser.role)
-    }else{
-      setLoading(false)
-    }
-  },[loggedInUser])
-  return loading ? (
-    <Spin fullscreen />
-  ) : (
-    <>
-      <Layout>
-        <Sider
-          trigger={null}
-          collapsible
-          collapsed={collapsed}
-          breakpoint="md"
-          onBreakpoint={(broken) => setCollapsed(broken)}
-          className="h-screen"
-        >
-          <div className="demo-logo-vertical" />
-          <Menu
-            theme="dark"
-            mode="inline"
-            defaultSelectedKeys={["1"]}
-            items={[
-              {
-                key: "1",
-                icon: <UserOutlined />,
-                label: "nav 1",
-              },
-              {
-                key: "2",
-                icon: <VideoCameraOutlined />,
-                label: "nav 2",
-              },
-              {
-                key: "3",
-                icon: <UploadOutlined />,
-                label: "nav 3",
-              },
-            ]}
-          />
-        </Sider>
-        <Layout>
-          <Header style={{ padding: 0 }}>
-            <Button
-              className="text-white!"
-              type="text"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              onClick={() => setCollapsed(!collapsed)}
-              style={{
-                fontSize: "22px",
-                width: 64,
-                height: 64,
-              }}
-            />
-          </Header>
-          <Content
-            className="m-2 p-4"
-            style={{
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            <Outlet />
-          </Content>
-        </Layout>
-      </Layout>
-    </>
-  );
-};
+function AdminDashboard() {
+  return (
+   <>
+   <h1 className="text-2xl font-semibold">DASHBOARD</h1>
 
-export default AdminDashboard;
+   <div className="flex gap-4 flex-wrap ">
+     <DashboardCard icons={<FaDollarSign />} title="Total Revenue" bg="bg-teal-800" />
+     <DashboardCard icons={<FaCartShopping />} title="Total Sales" bg="bg-red-800"/>
+     <DashboardCard icons={<FaSitemap />} title = "Total Profit" bg="bg-pink-800"/>
+     <DashboardCard icons={<FaUserGroup />} title="Total Users" bg="bg-blue-800"/>
+
+    
+   </div>
+   </>
+  )
+}
+
+export default AdminDashboard

@@ -76,12 +76,13 @@ function Login() {
 
       const response = await authSvc.login(data)
 
-      toast.success(`welcome to /${response.role} panel!!!`)
+      toast.success(`welcome to ${response.role} panel!!!`)
       setLoggedInUser(response)
       navigate(`/${response.role}`)
       // console.log(response)
-  } catch(exception){
+  } catch(exception: any){
     console.error(exception)
+    toast.error(exception.error.message)
   }
   // reset()
   // navigate("/home")

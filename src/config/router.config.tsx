@@ -1,13 +1,20 @@
+import { Spin } from "antd";
+import { lazy, Suspense } from "react"
 import {createBrowserRouter, RouterProvider} from "react-router"
-import Login from "../pages/auth/login/login"
-import Register from "../pages/auth/register/register.page"
-import HomePage from "../pages/home/home.page"
-import NotFoundPage from "../pages/errors/NotFound.page"
-import AdminDashboard from "../pages/dashboard/admin-dashboard.page"
-import Dashboard from "../pages/dashboard/dashboard.page"
-import BannerPage from "../pages/Banner/banner.oage"
-import ForgetPasswordPage from "../pages/forgetpassword/forgetpassword.page"
+
+const Login = lazy(()=> import("../pages/auth/login/login"));
+const Register = lazy(()=> import("../pages/auth/register/register.page"));
+const HomePage = lazy(()=> import("../pages/home/home.page"));
+const NotFoundPage = lazy(()=> import("../pages/errors/NotFound.page"));
+const BannerPage = lazy(()=> import("../pages/Banner/banner.oage"));
+const ForgetPasswordPage = lazy(()=> import("../pages/forgetpassword/forgetpassword.page"));
+
 import { ToastContainer} from 'react-toastify';
+
+const AdminLayout = lazy(()=> import("../pages/layout/admin-layout.page"));
+const AdminDashboard = lazy(()=> import("../pages/dashboard/admin-dashboard.page"));
+
+const SellerLayout = lazy(()=> import("../pages/layout/seller-layout.page"));
 
 
 
@@ -30,16 +37,27 @@ const routerConfig = createBrowserRouter([
     },
     {
         path: "/admin",
-        element: <AdminDashboard/>,
+        element: <AdminLayout/>,
         children: [
             {
-                path:"",
-                Component: Dashboard
+                index:true,
+                element:<Suspense fallback={<Spin fullscreen={true}/>}>  <AdminDashboard/> </Suspense>
             },
+           
             {
                 path:"banner/",
                 Component: BannerPage
             }
+        ]
+    },
+     {
+        path: "/seller",
+        element: <SellerLayout/>,
+        children: [
+            {
+                index:true,
+                element:<Suspense fallback={<Spin fullscreen={true}/>}>  <AdminDashboard/> </Suspense>
+            },
         ]
     },
     {
