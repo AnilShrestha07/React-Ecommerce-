@@ -1,5 +1,5 @@
 import Sider from "antd/es/layout/Sider"
-import { BoldOutlined, FileImageOutlined, HomeOutlined, SettingOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined } from "@ant-design/icons"
+import { ApartmentOutlined, BoldOutlined, DollarCircleOutlined, FileImageOutlined, HomeOutlined, MessageOutlined, SettingOutlined, ShoppingCartOutlined, ShoppingOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined } from "@ant-design/icons"
 import { Menu } from "antd"
 import { useAuth } from "../../context/auth.context"
 import Title from "antd/es/typography/Title"
@@ -30,10 +30,35 @@ const adminFeature = [
                 icon: <BoldOutlined/>,
                 label: <NavLink to="/admin/brand">Brand Management</NavLink>
               },
-              {
+               {
                 key: "5",
+                icon: <ApartmentOutlined/>,
+                label: <NavLink to="/admin/category">Category Management</NavLink>
+              },
+              {
+                key: "6",
                 icon: <UserOutlined/>,
                 label: <NavLink to="/admin/users">User Management</NavLink>
+              },
+               {
+                key: "7",
+                icon: <ShoppingOutlined/>,
+                label: <NavLink to="/admin/product">Product Management</NavLink>
+              },
+               {
+                key: "8",
+                icon: <ShoppingCartOutlined/>,
+                label: <NavLink to="/admin/order">Order Management</NavLink>
+              },
+               {
+                key: "9",
+                icon: <DollarCircleOutlined/>,
+                label: <NavLink to="/admin/transaction">Transaction Management</NavLink>
+              },
+               {
+                key: "10",
+                icon: <MessageOutlined/>,
+                label: <NavLink to="/admin/chat">Chat</NavLink>
               },
             ]
 const AdminSidebar = ({collapsed, setCollapsed}: Readonly<IAdminSidebarProps>)=>{
