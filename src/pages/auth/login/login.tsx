@@ -94,7 +94,7 @@ function Login() {
   if(token && loggedInUser){
     navigate("/" + loggedInUser.role)
   } 
- })
+ },[])
 //  console.log(errors)
 
   return (
