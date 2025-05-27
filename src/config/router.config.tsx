@@ -6,10 +6,11 @@ const Login = lazy(()=> import("../pages/auth/login/login"));
 const Register = lazy(()=> import("../pages/auth/register/register.page"));
 const HomePage = lazy(()=> import("../pages/home/home.page"));
 const NotFoundPage = lazy(()=> import("../pages/errors/NotFound.page"));
-const BannerPage = lazy(()=> import("../pages/Banner/banner.oage"));
+const BannerPage = lazy(()=> import("../pages/Banner/banner.page"));
 const ForgetPasswordPage = lazy(()=> import("../pages/forgetpassword/forgetpassword.page"));
 
 import { ToastContainer} from 'react-toastify';
+import BannerCreate from "../pages/Banner/banner-create.page";
 
 const AdminLayout = lazy(()=> import("../pages/layout/admin-layout.page"));
 const AdminDashboard = lazy(()=> import("../pages/dashboard/admin-dashboard.page"));
@@ -42,6 +43,10 @@ const routerConfig = createBrowserRouter([
             {
                 index:true,
                 element:<Suspense fallback={<Spin fullscreen={true}/>}>  <AdminDashboard/> </Suspense>
+            },
+            {
+                path: "banner/create",
+                Component: BannerCreate 
             },
            
             {
